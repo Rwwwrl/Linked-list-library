@@ -87,8 +87,6 @@ class ListNode:
         self.end = node
         while node:
             next_node = node.next_node
-            print('next_node: ', next_node)
-            print('node: ', node)
             node.next_node = prev
             prev = node
             node = next_node
