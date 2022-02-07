@@ -2,7 +2,6 @@ class Node:
     """
     Единица связанного списка - узел
     """
-    __slots__ = ('next_node', 'value')
 
     def __init__(self, value):
         self.next_node = None
