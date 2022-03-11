@@ -31,7 +31,7 @@ class LinkedListTestCase(unittest.TestCase):
     def test_contains(self):
         self.assertFalse(self.node1 in self.list_node)
         self.list_node.append(self.node1)
-        self.assertFalse(self.node1 in self.list_node)
+        self.assertTrue(self.node1 in self.list_node)
 
     def test_getitem(self):
         self.list_node.append(self.node1)
@@ -74,7 +74,7 @@ class LinkedListTestCase(unittest.TestCase):
     def test_popleft(self):
         self.list_node.append(self.node1)
         self.list_node.append(self.node2)
-        
+
         node3 = Node('node3')
         self.list_node.append(node3)
 
@@ -82,7 +82,14 @@ class LinkedListTestCase(unittest.TestCase):
         self.assertEqual(start_node, self.node1)
 
         self.assertEqual(list(iter(self.list_node)), [self.node2, node3])
-        
 
+    def test__initialize_start_and_end(self):
+        a = [10, 20, 30]
+        self.list_node._initialize_start_and_end(a)
+        self.assertEqual(self.list_node.start, Node(10))
+        self.assertEqual(self.list_node.end, Node(30))
 
-
+        a = []
+        self.list_node._initialize_start_and_end(a)
+        self.assertEqual(self.list_node.start, None)
+        self.assertEqual(self.list_node.end, None)

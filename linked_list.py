@@ -1,3 +1,4 @@
+from collections import abc
 from typing import Any
 
 
@@ -9,6 +10,9 @@ class Node:
         self.next_node = None
         self.value = value
 
+    def __eq__(self, other: 'Node') -> bool:
+        return self.value == other.value
+
     def __repr__(self):
         return f"<Node: {self.value}>"
 
@@ -17,9 +21,26 @@ class ListNode:
     """
     Связанный список
     """
-    def __init__(self):
-        self.start = None
-        self.end = None
+    def __init__(self, iterable: abc.Iterable = None):
+        self._initialize_start_and_end(iterable=iterable)
+
+    def _initialize_start_and_end(self, iterable: abc.Iterable) -> None:
+        '''
+        функция для итерации по итерируемому объекты
+        и установки значение self.start, self.end 
+        ( я сделал именно итерирование, а не получение первого и последнего значения
+          по индексу для поддержки неупорядоченных типов данных )
+        '''
+        if not iterable:
+            self.start = None
+            self.end = None
+            return
+        count = 0
+        for value in iterable:
+            if not count:
+                count += 1
+                self.start = Node(value)
+        self.end = Node(value)
 
     def __iter__(self):
         node = self.start
@@ -27,11 +48,11 @@ class ListNode:
             yield node
             node = node.next_node
 
-    def __contains__(self, value: Any) -> bool:
+    def __contains__(self, searching_node: Node) -> bool:
         if not self.start:
             return False
         for node in self:
-            if node.value == value:
+            if node == searching_node:
                 return True
         return False
 
