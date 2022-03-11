@@ -1,9 +1,11 @@
+from typing import Any
+
+
 class Node:
     """
     Единица связанного списка - узел
     """
-
-    def __init__(self, value):
+    def __init__(self, value: Any):
         self.next_node = None
         self.value = value
 
@@ -15,10 +17,7 @@ class ListNode:
     """
     Связанный список
     """
-    __slots__ = ('start', 'end')
-
     def __init__(self):
-        # start - указатель на самый первый узел списка
         self.start = None
         self.end = None
 
@@ -28,7 +27,7 @@ class ListNode:
             yield node
             node = node.next_node
 
-    def __contains__(self, value) -> bool:
+    def __contains__(self, value: Any) -> bool:
         if not self.start:
             return False
         for node in self:
@@ -36,25 +35,28 @@ class ListNode:
                 return True
         return False
 
-    def __getitem__(self, index):
+    def __getitem__(self, index: int) -> Node:
         start_index = 0
         node = self.start
         while start_index < index:
-            node = node.next_node
+            try:
+                node = node.next_node
+            except AttributeError:
+                raise IndexError('NodeList index out of range')
             start_index += 1
         return node
 
-    def remove(self, index):
-        """
-        удалить node с индексом index
-        """
+    def remove(self, index: int) -> None:
+        '''
+        удаление node по индексу index 
+        '''
         prev_node = self[index - 1]
-        prev_node.next_node = self[index + 1]
+        prev_node.next_node = prev_node.next_node.next_node
 
-    def insert(self, node, index):
-        """
-        вставить node в связанный список на позицию index
-        """
+    def insert(self, node: Node, index: int) -> None:
+        '''
+        вставка node по индексу index 
+        '''
         prev_node = self[index - 1]
         node.next_node = prev_node.next_node
         prev_node.next_node = node
@@ -69,7 +71,10 @@ class ListNode:
             node = node.next_node
         return count
 
-    def append(self, node: Node):
+    def append(self, node: Node) -> None:
+        '''
+        добавление в конец 
+        '''
         if not self.start:
             self.start = node
             self.end = node
@@ -77,7 +82,7 @@ class ListNode:
         self.end.next_node = node
         self.end = node
 
-    def reverse(self):
+    def reverse(self) -> None:
         '''
         Перевернуть связанный список 
         '''
@@ -90,3 +95,11 @@ class ListNode:
             prev = node
             node = next_node
         self.start = prev
+
+    def popleft(self) -> Node:
+        '''
+        удалить node сначала и вернуть его 
+        '''
+        start_node = self.start
+        self.start = self.start.next_node
+        return start_node

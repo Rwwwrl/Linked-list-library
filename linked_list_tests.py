@@ -38,6 +38,9 @@ class LinkedListTestCase(unittest.TestCase):
         self.list_node.append(self.node2)
         self.assertEqual(self.list_node[1], self.node2)
 
+        with self.assertRaises(IndexError):
+            self.list_node[90]
+
     def test_remove(self):
         node3 = Node("node3")
         self.list_node.append(self.node1)
@@ -62,11 +65,24 @@ class LinkedListTestCase(unittest.TestCase):
         self.list_node.append(self.node2)
         new_node = Node("node3")
         self.list_node.append(new_node)
-        
-        self.list_node.reverse()   
+
+        self.list_node.reverse()
         expected_result = [new_node, self.node2, self.node1]
         result = [node for node in self.list_node]
         self.assertEqual(result, expected_result)
+
+    def test_popleft(self):
+        self.list_node.append(self.node1)
+        self.list_node.append(self.node2)
+        
+        node3 = Node('node3')
+        self.list_node.append(node3)
+
+        start_node = self.list_node.popleft()
+        self.assertEqual(start_node, self.node1)
+
+        self.assertEqual(list(iter(self.list_node)), [self.node2, node3])
+        
 
 
 
