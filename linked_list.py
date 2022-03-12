@@ -26,21 +26,25 @@ class ListNode:
 
     def _initialize_start_and_end(self, iterable: abc.Iterable) -> None:
         '''
-        функция для итерации по итерируемому объекты
-        и установки значение self.start, self.end 
-        ( я сделал именно итерирование, а не получение первого и последнего значения
-          по индексу для поддержки неупорядоченных типов данных )
+        метод для установления начальных значений self.start и self.end
+        по итерируемому объекту.
         '''
         if not iterable:
             self.start = None
             self.end = None
             return
         count = 0
-        for value in iterable:
-            if not count:
-                count += 1
-                self.start = Node(value)
-        self.end = Node(value)
+
+        try:
+            # если iterable является упорядоченным, то нам не нужно по нему итерироваться
+            self.start = Node(iterable[0])
+            self.end = Node(iterable[-1])
+        except TypeError:
+            for value in iterable:
+                if not count:
+                    count += 1
+                    self.start = Node(value)
+            self.end = Node(value)
 
     def __iter__(self):
         node = self.start
