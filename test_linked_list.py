@@ -88,13 +88,16 @@ class LinkedListTestCase(unittest.TestCase):
         self.list_node._initialize_start_and_end(a)
         self.assertEqual(self.list_node.start, Node(10))
         self.assertEqual(self.list_node.end, Node(30))
+        self.assertEqual(list(iter(self.list_node)), [Node(10), Node(20), Node(30)])
 
         a = []
         self.list_node._initialize_start_and_end(a)
         self.assertEqual(self.list_node.start, None)
         self.assertEqual(self.list_node.end, None)
+        self.assertEqual(list(iter(self.list_node)), [])
 
         a = set([10, 20, 30])
         self.list_node._initialize_start_and_end(a)
         self.assertEqual(self.list_node.start, Node(10))
         self.assertEqual(self.list_node.end, Node(30))
+        self.assertEqual(list(iter(self.list_node)), [Node(10), Node(20), Node(30)])

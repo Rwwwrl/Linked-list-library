@@ -1,6 +1,6 @@
 # Библиотека для работы со односвязными списками
 
-тесты можно посмотреть в *linked_list_tests.py*, чтобы их запустить:
+тесты можно посмотреть в *test_linked_list.py*, чтобы их запустить:
 ```python
-python -m unittest linked_list_tests.py
+python -m unittest test_linked_list.py
 ```
