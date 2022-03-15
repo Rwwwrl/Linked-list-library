@@ -26,15 +26,25 @@ class ListNode:
 
     def _initialize_start_and_end(self, iterable: abc.Iterable) -> None:
         '''
-        метод для создания связанного списка по итерируемомоу объекту
+        метод для создания связанного списка по итерируемому объекту
         '''
         if not iterable:
             self.start = None
             self.end = None
             return
 
+        first_node = None
         for value in iterable:
-            self.append(Node(value))
+            node = Node(value)
+            try:
+                first_node.next_node = node
+                first_node = node
+            except AttributeError:
+                node = Node(value)
+                first_node = node
+                self.start = node
+
+        self.end = node
 
     def __iter__(self):
         node = self.start
@@ -57,7 +67,7 @@ class ListNode:
             try:
                 node = node.next_node
             except AttributeError:
-                raise IndexError('NodeList index out of range')
+                raise IndexError('ListNode index out of range')
             start_index += 1
         return node
 
