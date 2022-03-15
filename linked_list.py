@@ -52,11 +52,11 @@ class ListNode:
             yield node
             node = node.next_node
 
-    def __contains__(self, searching_node: Node) -> bool:
+    def __contains__(self, value: Any) -> bool:
         if not self.start:
             return False
         for node in self:
-            if node == searching_node:
+            if node.value == value:
                 return True
         return False
 
@@ -78,10 +78,11 @@ class ListNode:
         prev_node = self[index - 1]
         prev_node.next_node = prev_node.next_node.next_node
 
-    def insert(self, node: Node, index: int) -> None:
+    def insert(self, value: Any, index: int) -> None:
         '''
         вставка node по индексу index 
         '''
+        node = Node(value)
         prev_node = self[index - 1]
         node.next_node = prev_node.next_node
         prev_node.next_node = node
@@ -96,10 +97,11 @@ class ListNode:
             node = node.next_node
         return count
 
-    def append(self, node: Node) -> None:
+    def append(self, value: Any) -> None:
         '''
         добавление в конец 
         '''
+        node = Node(value)
         if not self.start:
             self.start = node
             self.end = node
