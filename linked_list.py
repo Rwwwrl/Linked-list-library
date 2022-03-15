@@ -1,5 +1,4 @@
-from collections import abc
-from typing import Any
+from typing import Any, Iterable
 
 
 class Node:
@@ -21,10 +20,10 @@ class ListNode:
     """
     Связанный список
     """
-    def __init__(self, iterable: abc.Iterable = None):
+    def __init__(self, iterable: Iterable = None):
         self._initialize_start_and_end(iterable=iterable)
 
-    def _initialize_start_and_end(self, iterable: abc.Iterable) -> None:
+    def _initialize_start_and_end(self, iterable: Iterable) -> None:
         '''
         метод для создания связанного списка по итерируемому объекту
         '''
